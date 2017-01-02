@@ -1,11 +1,17 @@
 language: elixir
 elixir:
-  - 1.3
+- 1.3
 otp_release:
-  - 18.3
+- 18.3
 sudo: false
 addons:
-  postgresql: '9.4' # Use postgres 9.4
+  postgresql: '9.4'
   before_script:
-    # Create the test database
-    - psql -c 'create database reverie_test;' -U postgres
+  - psql -c 'create database reverie_test;' -U postgres
+deploy:
+  provider: heroku
+  api_key:
+    secure: S5v7AENYAjg6q7hMEYT2W/AuSilNa2eNarh0XBUpz2gjOFnpBidYIX7E19GTxsyjQokc5SVBP5aGSzvZXAG8jpk2+eKSFS0oZKQIQ9REjPjyIpQgPbkF+eBWF2DTSHohJa9xvfur9YbcKNFqwpDIE/YzrIfcuskU1A0OqoH1mBp7/v90c58yfL665kD5Z7RCQlJLbaJoGKTY1nncr2IUtjUv5Av/lvqh/Y/D3dIGP8p/z17rnfYv/tO5dLPVVELf9JI77B5KXpXyRCCkXgscT7hYBg4Bs+BbkXG0j2STFoJdz8s3ooUz9nZg7upBKS+JajqJsipES4JHlDOztUFk7dHmp36yEClPyU7QY7U2TMrUufaRE8mPxeji+uyFp00CKTWS8WylZGQHGkYMDg9XvtkMQgYcsZGU+UHkk0PIRztQyZs7kZqv+H5565yyiECv4j8RTVtpM7+4NIrvrgqojHglpu9sPzTVATl6QWwEySwrbVgxSQ2Bw5ZGUX/npmIY1tlUtYYEh5006/ZhpbiwN9ayPDZum7A1j9p6mskypMelJLo2UpAAWjodL2TtWpgN901YTD0RIyv3mBeRHPa9dMgH1u7WzRRI+3kmbQPYPCt2qr5shmBiDymwslszas5GQB8bsEGUVCCh0gbtrxKS6sHVjKpAG7AsgBK5SjquOQE=
+  app: safe-brushlands-58823
+  on:
+    repo: fpapado/reverie-api
