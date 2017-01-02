@@ -1,4 +1,10 @@
-# Reverie
+# Reverie API
+
+API
+
+This is the API for the Reverie service.
+It is written in Elixir and Phoenix.
+User Authorisation is handled with JWT and Guardian.
 
 To start your Phoenix app:
 
