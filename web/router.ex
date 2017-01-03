@@ -9,7 +9,10 @@ defmodule Reverie.Router do
     pipe_through :api
 
     # Registration
-    post "register", RegistrationController, :create
+    post "/register", RegistrationController, :create
+
+    # Login; JWT token provision
+    post "/token", SessionController, :create, as: :login
 
     # Route session to SessionController
     resources "/session", SessionController, only: [:index]
