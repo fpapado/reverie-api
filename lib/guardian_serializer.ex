@@ -1,12 +1,10 @@
-defmodule Reverie.GuardianSerialiser do
+defmodule Reverie.GuardianSerializer do
     @behaviour Guardian.Serializer
 
     alias Reverie.Repo
     alias Reverie.User
 
-    def for_token(user = %User{}) do
-        { :ok, "User:#{user.id}" }
-    end
+    def for_token(user = %User{}), do: { :ok, "User:#{user.id}" }
     def for_token(_) do
         { :error, "Unknown resource type" }
     end
