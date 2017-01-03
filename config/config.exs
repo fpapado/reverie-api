@@ -17,6 +17,17 @@ config :reverie, Reverie.Endpoint,
   pubsub: [name: Reverie.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# Configure Guardian
+# Tries to get GUARDIAN_SECRET from env (e.g. prod) else uses fallback
+config :guardian, Guardian,
+  allowed_algos: ["HS512"], # optional
+  verify_module: Guardian.JWT,  # optional
+  issuer: "Reverie",
+  ttl: { 30, :days },
+  verify_issuer: true, # optional
+  secret_key: System.get_env("GUARDIAN_SECRET") || "lwYUio/QosefTMQGbBAFbdfZJxt89u3RSPztc930hyEgMbHepMG+G1JmoRM45QGo",
+  serializer: Reverie.GuardianSerializer
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
