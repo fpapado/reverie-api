@@ -8,6 +8,9 @@ defmodule Reverie.Router do
   scope "/api", Reverie do
     pipe_through :api
 
+    # Registration
+    post "register", RegistrationController, :create
+
     # Route session to SessionController
     resources "/session", SessionController, only: [:index]
   end
