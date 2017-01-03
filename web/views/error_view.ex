@@ -7,6 +7,11 @@ defmodule Reverie.ErrorView do
       |> JaSerializer.ErrorSerializer.format
   end
 
+  def render("403.json", _assigns) do
+      %{title: "Forbidden", code: 403}
+      |> JaSerializer.ErrorSerializer.format
+  end
+
   def render("500.json", _assigns) do
       %{title: "Internal Server Error", code: 500}
       |> JaSerializer.ErrorSerializer.format

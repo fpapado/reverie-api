@@ -6,10 +6,10 @@ defmodule Reverie.RegistrationController do
     # Note that we're validating the API payload via pattern-matching
     # This allows Phoenix to automatically return a 422 otherwise
     # Might want to use a consistent serializer later on
-    def create(conn, %{"data" => %{"type" => "user",
+    def create(conn, %{"data" => %{"type" => "users",
         "attributes" => %{"email" => email,
             "password" => password,
-            "password_confirmation" => password_confirmation}}}) do
+            "password-confirmation" => password_confirmation}}}) do
 
         changeset = User.changeset %User{}, %{email: email,
             password_confirmation: password_confirmation,
