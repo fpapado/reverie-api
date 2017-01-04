@@ -9,7 +9,7 @@ defmodule Reverie.GuardianSerializer do
         { :error, "Unknown resource type" }
     end
 
-    def from_token("User" <> id) do
+    def from_token("User:" <> id) do
         { :ok, Repo.get(User, id) }
     end
     def from_token(_) do
