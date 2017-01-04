@@ -1,15 +1,15 @@
-defmodule Peepchat.AuthErrorHandler do
+defmodule Reverie.AuthErrorHandler do
     use Reverie.Web, :controller
 
     def unauthenticated(conn, params) do
         conn
         |> put_status(401)
-        |> render(Peepchat.ErrorView, "401.json")
+        |> render(Reverie.ErrorView, "401.json")
     end
 
     def unauthorized(conn, params) do
         conn
         |> put_status(403)
-        |> render(Peepchat.ErrorView, "403.json")
+        |> render(Reverie.ErrorView, "403.json")
     end
 end
