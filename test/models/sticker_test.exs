@@ -7,8 +7,13 @@ defmodule Reverie.StickerTest do
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
-    changeset = Sticker.changeset(%Sticker{}, @valid_attrs)
+    changeset = Sticker.changeset(%Sticker{receiver_id: 1, sender_id: 2}, @valid_attrs)
     assert changeset.valid?
+  end
+
+  test "changeset with same sender and receive" do
+    changeset = Sticker.changeset(%Sticker{receiver_id: 1, sender_id: 1}, @valid_attrs)
+    refute changeset.valid?
   end
 
   test "changeset with invalid attributes" do

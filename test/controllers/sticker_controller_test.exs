@@ -83,9 +83,12 @@ defmodule Reverie.StickerControllerTest do
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn, user: user} do
     other_user = Repo.insert! %Reverie.User{}
-
     conn = post conn, sticker_path(conn, :create), data: %{type: "stickers", attributes: @invalid_attrs, relationships: %{"data": %{"type": "users", "id": other_user.id}}}
+    assert json_response(conn, 422)["errors"] != %{}
+  end
 
+  test "does not create resource and renders errors when user sends themselves a sticker", %{conn: conn, user: user} do
+    conn = post conn, sticker_path(conn, :create), data: %{type: "stickers", attributes: @valid_attrs, relationships: %{"data": %{"type": "users", "id": user.id}}}
     assert json_response(conn, 422)["errors"] != %{}
   end
 
