@@ -1,0 +1,16 @@
+Generate code;
+  Sticker
+  name: string
+  sender_id: references(users)
+  receiver_id: references(users)
+
+  TODO optional:
+    message
+      validation: 150 chars
+
+Add send/receive method
+  Send:
+  ensure_authenticated
+  TODO name: enum['a', 'b', 'c'] |> validate
+  sender_id: Guardian.load_resource
+  receiver_id: username |> user_by_id
