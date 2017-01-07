@@ -26,7 +26,7 @@ defmodule Reverie.Sticker do
 
     case receiver_id == sender_id do
       true ->
-        add_error(changeset, :receiver_id, "you cannot send stickers to yourself")
+        add_error(changeset, :receiver_id, "cannot be the same as sender", [validation: :same_user])
       false ->
         changeset
     end
