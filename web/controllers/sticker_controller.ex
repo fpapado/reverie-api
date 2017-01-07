@@ -78,6 +78,16 @@ defmodule Reverie.StickerController do
     receiving_user
   end
 
+  # Works with id, and redundant sender relationship
+  # TODO: make this the only form accepted?
+  defp build_receiver_relationship(%{"receiver" => %{"data" => %{"type" => users, "id" => id}}, "sender" => _}) do
+    receiving_user = Reverie.User
+    |> where(id: ^id)
+    |> Repo.one!
+
+    receiving_user
+  end
+
   # Show a certain sticker if it belongs to the user
   def show(conn, %{"id" => id}) do
     current_user = Guardian.Plug.current_resource(conn)
