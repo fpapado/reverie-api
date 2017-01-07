@@ -62,7 +62,6 @@ defmodule Reverie.StickerController do
   # NOTE: the relationship here is "email", but the spec says "id"...
   defp build_receiver_relationship(%{"data" => %{"type" => users, "email" => user_email}}) do
     # Get unique receiver
-    # TODO: add "not sender" constraint
     receiving_user = Reverie.User
     |> where(email: ^user_email)
     |> Repo.one!
