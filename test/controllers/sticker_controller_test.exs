@@ -56,12 +56,12 @@ defmodule Reverie.StickerControllerTest do
       "relationships" => %{
         "receiver" => %{
           "links" => %{
-            "related" => "http://localhost:4001/api/user/#{user.id}"
+            "related" => "http://localhost:4001/api/users/#{user.id}"
           }
         },
         "sender" => %{
           "links" => %{
-            "related" => "http://localhost:4001/api/user/#{other_user.id}"
+            "related" => "http://localhost:4001/api/users/#{other_user.id}"
           }
         }
       }

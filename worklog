@@ -1,16 +1,17 @@
-Generate code;
-  Sticker
-  name: string
-  sender_id: references(users)
-  receiver_id: references(users)
+TODO:
+  Clean up TODOs in code
+    Remove redundant build_relationship(s) and update tests
 
-  TODO optional:
+  Add filter parameters for email
+
+Further work
+  Sticker
+  Title
+    enum of category
+    validation
+  Optional params:
     message
       validation: 150 chars
 
 Add send/receive method
-  Send:
-  ensure_authenticated
-  TODO name: enum['a', 'b', 'c'] |> validate
-  sender_id: Guardian.load_resource
-  receiver_id: username |> user_by_id
+  name: enum['a', 'b', 'c'] |> validate

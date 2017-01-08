@@ -30,8 +30,8 @@ defmodule Reverie.Router do
     pipe_through :api_auth
 
     # Users
-    get "/user/current", UserController, :current, as: :current_user
-    resources "/user", UserController, only: [:show, :index] do
+    get "/users/current", UserController, :current, as: :current_user
+    resources "/users", UserController, only: [:show, :index] do
       get "/stickers", StickerController, :index, as: :stickers
     end
 
