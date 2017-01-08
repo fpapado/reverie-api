@@ -37,6 +37,7 @@ defmodule Reverie.Mixfile do
      {:gettext, "~> 0.11"},
      {:cors_plug, "~> 1.1"},
      {:ja_serializer, "~> 0.11.2"},
+     {:inquisitor, "~> 0.2"},
      {:comeonin, "~> 2.4"},
      {:guardian, "~> 0.14.0"},
      {:cowboy, "~> 1.0"}]

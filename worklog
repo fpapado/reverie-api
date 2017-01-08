@@ -15,3 +15,5 @@ Further work
 
 Add send/receive method
   name: enum['a', 'b', 'c'] |> validate
+
+Handle sent stickers
