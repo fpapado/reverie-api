@@ -56,30 +56,7 @@ defmodule Reverie.StickerController do
     end
   end
 
-  # NOTE: I believe these are ok here, since we are at the API boundary
-  #   however, I am not sure whether passing in the id straight into Sticker
-  #   is correct, or whether we should be using the changeset.
-  # NOTE: the relationship here is "email", but the spec says "id"...
-  defp build_receiver_relationship(%{"data" => %{"type" => users, "email" => user_email}}) do
-    # Get unique receiver
-    receiving_user = Reverie.User
-    |> where(email: ^user_email)
-    |> Repo.one!
-
-    receiving_user
-  end
-
-  # Works with id, per the spec
-  defp build_receiver_relationship(%{"data" => %{"type" => users, "id" => id}}) do
-    receiving_user = Reverie.User
-    |> where(id: ^id)
-    |> Repo.one!
-
-    receiving_user
-  end
-
   # Works with id, and redundant sender relationship
-  # TODO: make this the only form accepted?
   defp build_receiver_relationship(%{"receiver" => %{"data" => %{"type" => users, "id" => id}}, "sender" => _}) do
     receiving_user = Reverie.User
     |> where(id: ^id)

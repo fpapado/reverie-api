@@ -14,7 +14,7 @@ defmodule Reverie.Sticker do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title])
+    |> cast(params, [:title, :receiver_id, :sender_id])
     |> validate_required([:title, :receiver_id, :sender_id])
     |> validate_length(:title, min: 4)
     |> validate_different_user

@@ -1,10 +1,4 @@
-TODO:
-  Clean up TODOs in code
-    Remove redundant build_relationship(s) and update tests
-
-  Add filter parameters for email
-
-Further work
+Further work: better stickers
   Sticker
   Title
     enum of category
