@@ -1,0 +1,14 @@
+Further work: better stickers
+  Sticker
+  Title
+    enum of category
+      validation
+    s3 link
+  Optional params:
+    message
+      validation: 150 chars
+
+Add send/receive method
+  name: enum['a', 'b', 'c'] |> validate
+
+Handle/present sent stickers for a user
