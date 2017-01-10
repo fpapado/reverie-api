@@ -1,14 +1,13 @@
 defmodule Reverie.StickerController do
   use Reverie.Web, :controller
   import Ecto.Query
-  import Logger
 
   alias Reverie.Sticker
 
-  # Enforce user authentication
-  plug Guardian.Plug.EnsureAuthenticated, handler: Reverie.AuthErrorHandler
-
   # List of Stickers by owner (receiver), based on token
+  # NOTE: Preloads :sender by default, since we typically want
+  # the sender's username alongside the sticker / message.
+  # Might want to change this in the future, to use the ?include option
   def index(conn, %{"user_id" => user_id}) do
     current_user = Guardian.Plug.current_resource(conn)
 
@@ -16,8 +15,9 @@ defmodule Reverie.StickerController do
       true ->
         stickers = Sticker
         |> where(receiver_id: ^current_user.id)
-        |> Repo.all
-        render(conn, "index.json", data: stickers)
+        |> preload(:sender)
+        |> Repo.all()
+        render(conn, "index.json", data: stickers, opts: [include: "sender"])
 
       false ->
         conn

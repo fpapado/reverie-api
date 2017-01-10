@@ -3,15 +3,24 @@ defmodule Reverie.StickerView do
   use JaSerializer.PhoenixView
 
   attributes [:title]
-  has_one :sender, link: :sender_link
-  has_one :receiver, link: :receiver_link
+  has_one :sender,
+    serializer: Reverie.UserView,
+    link: :sender_link,
+    include: false,
+    identifiers: :when_included
 
-  def sender_link(room, conn) do
-    user_url(conn, :show, room.sender_id)
+  has_one :receiver,
+    serializer: Reverie.UserView,
+    link: :receiver_link,
+    include: false,
+    identifiers: :when_included
+
+  def sender_link(sticker, conn) do
+    user_url(conn, :show, sticker.sender_id)
   end
 
-  def receiver_link(room, conn) do
-    user_url(conn, :show, room.receiver_id)
+  def receiver_link(sticker, conn) do
+    user_url(conn, :show, sticker.receiver_id)
   end
 
   def render("index.json", %{data: stickers}) do
