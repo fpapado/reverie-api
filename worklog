@@ -10,7 +10,8 @@ Further work: better stickers
   Sticker
   Title
     enum of category
-    validation
+      validation
+    s3 link
   Optional params:
     message
       validation: 150 chars
