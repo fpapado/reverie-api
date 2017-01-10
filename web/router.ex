@@ -27,7 +27,16 @@ defmodule Reverie.Router do
 
   # Authenticated scope
   scope "/api", Reverie do
-      pipe_through :api_auth
-      get "/user/current", UserController, :current
+    pipe_through :api_auth
+
+    # Users
+    get "/users/current", UserController, :current, as: :current_user
+    resources "/users", UserController, only: [:show, :index] do
+      get "/stickers", StickerController, :index, as: :stickers
+    end
+
+    # New and Edit are not used in APIs;
+    # Update is excluded for now (see note in sticker_controller.ex)
+    resources "/stickers", StickerController, except: [:new, :edit]
   end
 end
