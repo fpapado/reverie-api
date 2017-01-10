@@ -3,8 +3,8 @@ defmodule Reverie.Sticker do
 
   schema "stickers" do
     field :title, :string
-    belongs_to :sender, Reverie.Sender
-    belongs_to :receiver, Reverie.Receiver
+    belongs_to :sender, Reverie.User
+    belongs_to :receiver, Reverie.User
 
     timestamps()
   end
