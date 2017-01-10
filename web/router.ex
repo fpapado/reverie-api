@@ -37,6 +37,6 @@ defmodule Reverie.Router do
 
     # New and Edit are not used in APIs;
     # Update is excluded for now (see note in sticker_controller.ex)
-    resources "/stickers", StickerController, except: [:new, :edit, :update]
+    resources "/stickers", StickerController, except: [:new, :edit]
   end
 end
