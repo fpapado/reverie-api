@@ -1,3 +1,11 @@
+Data loading improvements:
+  Implement GET /api/stickers?user_id=X
+
+  [DONE] Implemet GET /api/users?username=X
+    in contrast to ?filter
+
+  Implement ?include for stickers
+
 Further work: better stickers
   Sticker
   Title
@@ -10,4 +18,7 @@ Further work: better stickers
 Add send/receive method
   name: enum['a', 'b', 'c'] |> validate
 
-Handle sent stickers
+Add include parameter from JSON API spec;
+  this allows sideloading user first/last name for stickers
+
+Handle/present sent stickers for a user
