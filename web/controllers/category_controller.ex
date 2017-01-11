@@ -3,6 +3,16 @@ defmodule Reverie.CategoryController do
 
   alias Reverie.Category
 
+  # Enforce user authentication
+  plug Guardian.Plug.EnsureAuthenticated, handler: Reverie.AuthErrorHandler
+
+  def show(conn, %{"id" => id}) do
+    category = Repo.get!(Category, id)
+    render(conn, "show.json", category: category)
+  end
+
+
+  # NOTE: Skipped in router for now; should be only admin.
   def index(conn, _params) do
     categories = Repo.all(Category)
     render(conn, "index.json", categories: categories)
@@ -22,11 +32,6 @@ defmodule Reverie.CategoryController do
         |> put_status(:unprocessable_entity)
         |> render(Reverie.ChangesetView, "error.json", changeset: changeset)
     end
-  end
-
-  def show(conn, %{"id" => id}) do
-    category = Repo.get!(Category, id)
-    render(conn, "show.json", category: category)
   end
 
   def update(conn, %{"id" => id, "category" => category_params}) do

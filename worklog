@@ -1,8 +1,11 @@
 Further work: better stickers
 1) Add json category: image, title, sticker:has_many
 1b) Link category to sticker
-1c) migrate, test
+
+1c) add validations to categories
 1d) seed db with base categories
+
+1e) migrate, test
 
 2) Add message, validations to sticker
 3) Add json-api serialization
@@ -23,3 +26,5 @@ Handle/present sent stickers for a user
 
 Later:
 Open or closed indexing of users?
+add references to children in parent schemas (+migration for db table)
+add :assoc_constraint
