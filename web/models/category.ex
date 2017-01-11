@@ -15,5 +15,6 @@ defmodule Reverie.Category do
     struct
     |> cast(params, [:title, :imgurl])
     |> validate_required([:title, :imgurl])
+    |> unique_constraint(:title)
   end
 end

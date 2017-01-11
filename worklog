@@ -27,4 +27,5 @@ Handle/present sent stickers for a user
 Later:
 Open or closed indexing of users?
 add references to children in parent schemas (+migration for db table)
-add :assoc_constraint
+add assoc_constraint([:sender, :receiver]),
+  see: https://hexdocs.pm/ecto/Ecto.Changeset.html#assoc_constraint/3
