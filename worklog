@@ -1,4 +1,12 @@
 Further work: better stickers
+1) Add json category: image, title, sticker:has_many
+1b) Link category to sticker
+1c) migrate, test
+1d) seed db with base categories
+
+2) Add message, validations to sticker
+3) Add json-api serialization
+
   Sticker
   Title
     enum of category
@@ -12,3 +20,6 @@ Add send/receive method
   name: enum['a', 'b', 'c'] |> validate
 
 Handle/present sent stickers for a user
+
+Later:
+Open or closed indexing of users?
