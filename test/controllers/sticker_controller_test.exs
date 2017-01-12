@@ -2,26 +2,32 @@ defmodule Reverie.StickerControllerTest do
   use Reverie.ConnCase
 
   alias Reverie.Sticker
-  @valid_attrs %{title: "some content"}
+  @valid_attrs %{title: "some message for you"}
   @invalid_attrs %{}
 
   defp create_test_stickers(user) do
     other_user = Repo.insert! %Reverie.User{}
+    test_category = Repo.get_by(Reverie.Category, title: "You're cool")
 
     # Three stickers with the logged-in user as receiver, other as sender
     Enum.each ["first", "second", "third"], fn title ->
-      Repo.insert! %Reverie.Sticker{receiver_id: user.id, sender_id: other_user.id, title: title}
+      Repo.insert! %Reverie.Sticker{receiver_id: user.id, sender_id: other_user.id, title: title, category_id: test_category.id}
     end
 
     # Two stickers with other as receiver, logged-in user as sender
     Enum.each ["fourth", "fifth"], fn title ->
-      Repo.insert! %Reverie.Sticker{receiver_id: other_user.id, sender_id: user.id, title: title}
+      Repo.insert! %Reverie.Sticker{receiver_id: other_user.id, sender_id: user.id, title: title, category_id: test_category.id}
     end
   end
 
   setup %{conn: conn} do
-    # Crerate a user (bypassing validation)
+    # Crerate users (bypassing validation)
     user = Repo.insert! %Reverie.User{}
+    other_user = Repo.insert! %Reverie.User{}
+
+    # Create test category
+    test_category = Repo.insert!(%Reverie.Category{title: "You're cool", imgurl: "https://s3.eu-central-1.amazonaws.com/reveriestatic/cool.png"})
+
     # Encode JWT for the user
     {:ok, jwt, _} = Guardian.encode_and_sign(user, :token)
 
@@ -29,7 +35,7 @@ defmodule Reverie.StickerControllerTest do
     |> put_req_header("content-type", "application/vnd.api+json")
     |> put_req_header("authorization", "Bearer #{jwt}")
 
-    {:ok, %{conn: conn, user: user}}
+    {:ok, %{conn: conn, user: user, other_user: other_user, category: test_category}}
   end
 
   test "lists owned entries on index (receiver_id == user id)", %{conn: conn, user: user} do
@@ -99,22 +105,21 @@ defmodule Reverie.StickerControllerTest do
     assert Enum.count(json_response(conn, 200)["included"]) == 1
   end
 
-  test "creates and renders resource when data is valid, using id", %{conn: conn, user: user} do
+  test "creates and renders resource when data is valid, using id", %{conn: conn, user: user, other_user: other_user, category: category} do
     other_user = Repo.insert! %Reverie.User{}
-    conn = post conn, sticker_path(conn, :create), data: %{type: "stickers", attributes: @valid_attrs, relationships: %{"receiver": %{"data": %{"type": "users", "id": other_user.id}}, "sender": %{"data": %{"type": "users", "id": user.id}}}}
+    conn = post conn, sticker_path(conn, :create), data: %{type: "stickers", attributes: @valid_attrs, relationships: %{"receiver": %{"data": %{"type": "users", "id": other_user.id}}, "sender": %{"data": %{"type": "users", "id": user.id}}, "category": %{"data": %{"type": "categories", "id": category.id}}}}
 
     assert json_response(conn, 201)["data"]["id"]
     assert Repo.get_by(Sticker, @valid_attrs)
   end
 
-  test "does not create resource and renders errors when data is invalid", %{conn: conn, user: user} do
-    other_user = Repo.insert! %Reverie.User{}
-    conn = post conn, sticker_path(conn, :create), data: %{type: "stickers", attributes: @invalid_attrs, relationships: %{"receiver": %{"data": %{"type": "users", "id": other_user.id}}, "sender": %{"data": %{"type": "users", "id": user.id}}}}
+  test "does not create resource and renders errors when data is invalid", %{conn: conn, user: user, other_user: other_user, category: category} do
+    conn = post conn, sticker_path(conn, :create), data: %{type: "stickers", attributes: @invalid_attrs, relationships: %{"receiver": %{"data": %{"type": "users", "id": other_user.id}}, "sender": %{"data": %{"type": "users", "id": user.id}}, "category": %{"data": %{"type": "categories", "id": category.id}}}}
     assert json_response(conn, 422)["errors"] != %{}
   end
 
-  test "does not create resource and renders errors when user sends themselves a sticker", %{conn: conn, user: user} do
-    conn = post conn, sticker_path(conn, :create), data: %{type: "stickers", attributes: @invalid_attrs, relationships: %{"receiver": %{"data": %{"type": "users", "id": user.id}}, "sender": %{}}}
+  test "does not create resource and renders errors when user sends themselves a sticker", %{conn: conn, user: user, category: category} do
+    conn = post conn, sticker_path(conn, :create), data: %{type: "stickers", attributes: @invalid_attrs, relationships: %{"receiver": %{"data": %{"type": "users", "id": user.id}}, "sender": %{}, "category": %{"data": %{"type": "categories", "id": category.id}}}}
     assert json_response(conn, 422)["errors"] != %{}
   end
 

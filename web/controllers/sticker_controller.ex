@@ -40,8 +40,11 @@ defmodule Reverie.StickerController do
     receiver = relationships
     |> build_receiver_relationship
 
+    category = relationships
+    |> build_category_relationship
+
     # Pass both sender and receiver IDs, use changeset for validation
-    changeset = Sticker.changeset(%Sticker{sender_id: current_user.id, receiver_id: receiver.id}, sticker_params)
+    changeset = Sticker.changeset(%Sticker{sender_id: current_user.id, receiver_id: receiver.id, category_id: category.id}, sticker_params)
 
     case Repo.insert(changeset) do
       {:ok, sticker} ->
@@ -63,6 +66,12 @@ defmodule Reverie.StickerController do
     |> Repo.one!
 
     receiving_user
+  end
+
+  defp build_category_relationship(%{"category" => %{"data" => %{"type" => "categories", "id" => id}}}) do
+    Reverie.Category
+    |> where(id: ^id)
+    |> Repo.one!
   end
 
   # Show a certain sticker if it belongs to the user
