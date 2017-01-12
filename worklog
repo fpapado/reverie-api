@@ -1,6 +1,7 @@
 Further work: better stickers
-1) Add json-api serialization for sticker categories (include)
-2) Add message to sticker
+1) preload data and ?incude defaults for sticker :show
+2) Add indexing for categories
+3) Add message to sticker
 
   Sticker
   Title
@@ -17,6 +18,13 @@ Add send/receive method
 Handle/present sent stickers for a user
 
 Later:
+Fix:
+  consistent pluralization in serializing,
+  consistent pluralization in controllers,
+  consistent pluralization in Ember,
+  show.json-api derpecation,
+  decide where to put default includes (DSL vs controller)
+
 Categories: add long-form message
 Open or closed indexing of users?
 add references to children in parent schemas (+migration for db table)

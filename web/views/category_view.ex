@@ -1,5 +1,8 @@
 defmodule Reverie.CategoryView do
   use Reverie.Web, :view
+  use JaSerializer.PhoenixView
+
+  attributes [:title, :imgurl]
 
   def render("index.json", %{categories: categories}) do
     %{data: render_many(categories, Reverie.CategoryView, "category.json")}
@@ -9,9 +12,16 @@ defmodule Reverie.CategoryView do
     %{data: render_one(category, Reverie.CategoryView, "category.json")}
   end
 
+  # Render single category in JSONAPI format
+  # TODO: check whether JaSerializer has this functionality
   def render("category.json", %{category: category}) do
-    %{id: category.id,
-      title: category.title,
-      imgurl: category.imgurl}
+    %{
+      "type": "category",
+      "id": category.id,
+      "attributes": %{
+        "title": category.title,
+        "imgurl": category.imgurl
+      }
+    }
   end
 end

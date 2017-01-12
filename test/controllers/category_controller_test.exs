@@ -21,9 +21,15 @@ defmodule Reverie.CategoryControllerTest do
   test "shows chosen resource", %{conn: conn} do
     category = Repo.insert! %Category{title: "test", imgurl: "some url"}
     conn = get conn, category_path(conn, :show, category)
-    assert json_response(conn, 200)["data"] == %{"id" => category.id,
-      "title" => category.title,
-      "imgurl" => category.imgurl}
+    assert json_response(conn, 200)["data"] ==
+      %{
+        "type" => "category",
+        "id" => to_string(category.id),
+        "attributes" => %{
+          "title" => category.title,
+          "imgurl" => category.imgurl
+        }
+      }
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do

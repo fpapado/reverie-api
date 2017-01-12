@@ -15,9 +15,9 @@ defmodule Reverie.StickerController do
       true ->
         stickers = Sticker
         |> where(receiver_id: ^current_user.id)
-        |> preload(:sender)
+        |> preload([:sender, :category])
         |> Repo.all()
-        render(conn, "index.json", data: stickers, opts: [include: "sender"])
+        render(conn, "index.json", data: stickers, opts: [include: "category,sender"])
 
       false ->
         conn
