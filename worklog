@@ -1,6 +1,5 @@
 Further work: better stickers
-1) Add indexing for categories; this would help Ember listing
-2) Consider removing "title" from sticker; handled by category?
+1) Consider removing "title" from sticker; handled by category?
 
   Sticker
     title [Should remove?]
@@ -39,3 +38,5 @@ Later:
 - add references to children in parent schemas (+migration for db table)
 - add assoc_constraint([:sender, :receiver]),
     see: https://hexdocs.pm/ecto/Ecto.Changeset.html#assoc_constraint/3
+
+- [Feature] Add "hidden" sticker categories, that are awarded by admins

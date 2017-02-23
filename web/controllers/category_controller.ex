@@ -11,8 +11,6 @@ defmodule Reverie.CategoryController do
     render(conn, "show.json", category: category)
   end
 
-
-  # NOTE: Skipped in router for now; should be only admin.
   def index(conn, _params) do
     categories = Repo.all(Category)
     render(conn, "index.json", categories: categories)

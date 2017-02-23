@@ -40,7 +40,7 @@ defmodule Reverie.Router do
     resources "/stickers", StickerController, except: [:new, :edit, :update]
 
     # Categories
-    # Only :show is included; no need for :index, :edit etc.
-    resources "/categories", CategoryController, only: [:show]
+    # Only :show, :index are included; might consider :update, :delete
+    resources "/categories", CategoryController, only: [:show, :index]
   end
 end

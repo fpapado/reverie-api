@@ -18,9 +18,10 @@ defmodule Reverie.CategoryControllerTest do
     {:ok, %{conn: conn, user: user}}
   end
 
-  test "shows chosen resource", %{conn: conn} do
+  test "shows chosen category", %{conn: conn} do
     category = Repo.insert! %Category{title: "test", imgurl: "some url"}
     conn = get conn, category_path(conn, :show, category)
+
     assert json_response(conn, 200)["data"] ==
       %{
         "type" => "category",
@@ -31,6 +32,34 @@ defmodule Reverie.CategoryControllerTest do
         }
       }
   end
+
+  test "lists all categories", %{conn: conn} do
+    category1 = Repo.insert! %Category{title: "test", imgurl: "some url"}
+    category2 = Repo.insert! %Category{title: "another test", imgurl: "some url"}
+
+    conn = get conn, category_path(conn, :index)
+
+    assert json_response(conn, 200)["data"] ==
+      [
+        %{
+          "type" => "category",
+          "id" => to_string(category1.id),
+          "attributes" => %{
+            "title" => category1.title,
+            "imgurl" => category1.imgurl
+          }
+        },
+        %{
+          "type" => "category",
+          "id" => to_string(category2.id),
+          "attributes" => %{
+            "title" => category2.title,
+            "imgurl" => category2.imgurl
+          }
+        }
+    ]
+  end
+
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
     assert_error_sent 404, fn ->
