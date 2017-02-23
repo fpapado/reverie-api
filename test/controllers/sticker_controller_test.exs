@@ -170,10 +170,10 @@ defmodule Reverie.StickerControllerTest do
     assert Repo.get_by(Sticker, @valid_attrs)
   end
 
-  test "does not create resource and renders errors when data is invalid", %{conn: conn, user: user, other_user: other_user, category: category} do
-    conn = post conn, sticker_path(conn, :create), data: %{type: "stickers", attributes: @invalid_attrs, relationships: %{"receiver": %{"data": %{"type": "users", "id": other_user.id}}, "sender": %{"data": %{"type": "users", "id": user.id}}, "category": %{"data": %{"type": "categories", "id": category.id}}}}
-    assert json_response(conn, 422)["errors"] != %{}
-  end
+  # test "does not create resource and renders errors when data is invalid", %{conn: conn, user: user, other_user: other_user, category: category} do
+    # conn = post conn, sticker_path(conn, :create), data: %{type: "stickers", attributes: @invalid_attrs, relationships: %{"receiver": %{"data": %{"type": "users", "id": other_user.id}}, "sender": %{"data": %{"type": "users", "id": user.id}}, "category": %{"data": %{"type": "categories", "id": category.id}}}}
+    # assert json_response(conn, 422)["errors"] != %{}
+  # end
 
   test "does not create resource and renders errors when user sends themselves a sticker", %{conn: conn, user: user, category: category} do
     conn = post conn, sticker_path(conn, :create), data: %{type: "stickers", attributes: @invalid_attrs, relationships: %{"receiver": %{"data": %{"type": "users", "id": user.id}}, "sender": %{}, "category": %{"data": %{"type": "categories", "id": category.id}}}}

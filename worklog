@@ -1,22 +1,7 @@
-Further work: better stickers
-1) Consider removing "title" from sticker; handled by category?
-
-  Sticker
-    title [Should remove?]
-    belongs_to Category
-      title
-      url
-
-  [NYI] Optional params:
-    message
-      validation: 150 chars
-
-Add send/receive method:
-  name: enum['a', 'b', 'c'] |> validate
-
-- Handle/present sent stickers for a user
-
 Later:
+- Handle/present sent stickers for a user. Delete?
+- Name / Surname
+- Pull default author name if logged in to app
 - Decide on json-api view structure;
   is there a single view we could use instead of our own defs?
 
@@ -40,3 +25,6 @@ Later:
     see: https://hexdocs.pm/ecto/Ecto.Changeset.html#assoc_constraint/3
 
 - [Feature] Add "hidden" sticker categories, that are awarded by admins
+- build_receiver_relationship handle function not found
+  (we don't need to, I suppose, but rendering errors is nice)
+- Sticker message consider, max 150 chars
