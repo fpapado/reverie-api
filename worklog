@@ -1,32 +1,40 @@
 Further work: better stickers
-1) preload data and ?incude defaults for sticker :show
-2) Add indexing for categories
-3) Add message to sticker
+1) preload data and ?incude defaults for sticker :show; Tests
+2) Add indexing for categories; this would help Ember listing
+3) Consider removing "title" from sticker; handled by category?
 
   Sticker
-  Title
-    enum of category
-      validation
-    s3 link
-  Optional params:
+    title [Should remove?]
+    belongs_to Category
+      title
+      url
+
+  [NYI] Optional params:
     message
       validation: 150 chars
 
-Add send/receive method
+Add send/receive method:
   name: enum['a', 'b', 'c'] |> validate
 
-Handle/present sent stickers for a user
+- Handle/present sent stickers for a user
 
 Later:
-Fix:
-  consistent pluralization in serializing,
-  consistent pluralization in controllers,
-  consistent pluralization in Ember,
-  show.json-api derpecation,
-  decide where to put default includes (DSL vs controller)
+- Decide on json-api view structure;
+  is there a single view we could use instead of our own defs?
 
-Categories: add long-form message
-Open or closed indexing of users?
-add references to children in parent schemas (+migration for db table)
-add assoc_constraint([:sender, :receiver]),
-  see: https://hexdocs.pm/ecto/Ecto.Changeset.html#assoc_constraint/3
+- decide where to put default includes (DSL vs controller)
+- decide whether those includes should be default
+  - Currently, we include them anyway in Ember, even if not needed.
+    Easier to change without breaking
+
+- consistent pluralization in serializing,
+- consistent pluralization in controllers,
+- consistent pluralization in Ember,
+- show.json-api deprecation,
+
+- Categories: add long-form message / explanation?
+- Open or closed indexing of users?
+
+- add references to children in parent schemas (+migration for db table)
+- add assoc_constraint([:sender, :receiver]),
+    see: https://hexdocs.pm/ecto/Ecto.Changeset.html#assoc_constraint/3
