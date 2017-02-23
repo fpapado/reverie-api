@@ -1,7 +1,6 @@
 Further work: better stickers
-1) preload data and ?incude defaults for sticker :show; Tests
-2) Add indexing for categories; this would help Ember listing
-3) Consider removing "title" from sticker; handled by category?
+1) Add indexing for categories; this would help Ember listing
+2) Consider removing "title" from sticker; handled by category?
 
   Sticker
     title [Should remove?]
@@ -21,6 +20,8 @@ Add send/receive method:
 Later:
 - Decide on json-api view structure;
   is there a single view we could use instead of our own defs?
+
+- Figure out indexes, especially for stickers (sender, receiver, category)
 
 - decide where to put default includes (DSL vs controller)
 - decide whether those includes should be default

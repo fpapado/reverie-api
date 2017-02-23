@@ -80,9 +80,10 @@ defmodule Reverie.StickerController do
 
     sticker = Sticker
     |> where(receiver_id: ^current_user.id, id: ^id)
-    |> Repo.one!
+    |> preload([:sender, :category])
+    |> Repo.one!()
 
-    render(conn, "show.json", data: sticker)
+    render(conn, "show.json", data: sticker, opts: [include: "category,sender"])
   end
 
   def update(conn, %{"id" => id, "data" => %{"id" => _, "type" => "sticker", "attributes" => sticker_params}}) do

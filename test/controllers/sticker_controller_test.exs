@@ -58,7 +58,7 @@ defmodule Reverie.StickerControllerTest do
     assert (json_response(conn, 404))
   end
 
-  test "shows chosen resource", %{conn: conn, user: user, other_user: other_user, category: category} do
+  test "shows chosen sticker, owned by user, including sender and category by default", %{conn: conn, user: user, other_user: other_user, category: category} do
     sticker = Repo.insert! %Sticker{receiver_id: user.id, sender_id: other_user.id, category_id: category.id}
 
     conn = get conn, sticker_path(conn, :show, sticker)
@@ -71,6 +71,10 @@ defmodule Reverie.StickerControllerTest do
       },
       "relationships" => %{
         "category" => %{
+          "data" => %{
+            "id" => "#{category.id}",
+            "type" => "category"
+          },
           "links" => %{
             "related" => "http://localhost:4001/api/categories/#{category.id}"
           }
@@ -81,12 +85,40 @@ defmodule Reverie.StickerControllerTest do
           }
         },
         "sender" => %{
+          "data" => %{
+            "id" => "#{other_user.id}",
+            "type" => "user"
+          },
           "links" => %{
-            "related" => "http://localhost:4001/api/users/#{other_user.id}"
+            "related" => "http://localhost:4001/api/users/#{other_user.id}",
           }
         }
       }
     }
+
+    assert json_response(conn, 200)["included"] ==
+      [%{
+        "type" => "category",
+        "id" => to_string(category.id),
+        "attributes" => %{
+          "title" => category.title,
+          "imgurl" => category.imgurl
+        }
+      },
+      %{
+        "type" => "user",
+        "id" => to_string(other_user.id),
+        "attributes" => %{
+          "email" => other_user.email
+        },
+        "relationships" => %{
+          "stickers" => %{
+            "links" => %{
+              "related" => "http://localhost:4001/api/users/#{other_user.id}/stickers"
+            }
+          }
+        }
+      }]
   end
 
   test "does not show resource and instead throw error when id is nonexistent", %{conn: conn, user: _user} do
