@@ -8,7 +8,6 @@ Later:
   is there a single view we could use instead of our own defs?
 
 - Figure out indexes, especially for stickers (sender, receiver, category)
-- Add reciprocal relationship of has_many in User for Sticker
 
 - decide where to put default includes (DSL vs controller)
 - decide whether those includes should be default

@@ -1,8 +1,8 @@
 defmodule Reverie.StickerController do
   use Reverie.Web, :controller
-  import Ecto.Query
 
   alias Reverie.Sticker
+  alias Reverie.User
 
   # List of Stickers by owner (receiver), based on token
   # NOTE: Preloads :sender by default, since we typically want
@@ -13,8 +13,9 @@ defmodule Reverie.StickerController do
 
     case to_string(user_id) == to_string(current_user.id) do
       true ->
-        stickers = Sticker
-        |> where(receiver_id: ^current_user.id)
+        stickers = User
+        |> Repo.get(user_id)
+        |> assoc(:stickers_received)
         |> preload([:sender, :category])
         |> Repo.all()
         render(conn, "index.json", data: stickers, opts: [include: "category,sender"])
