@@ -1,6 +1,5 @@
 Later:
 
-- Get user stickers from relation
 - Handle/present sent stickers for a user. Delete?
 - Name / Surname
 - Pull default author name if logged in to app
@@ -13,6 +12,8 @@ Later:
 - decide whether those includes should be default
   - Currently, we include them anyway in Ember, even if not needed.
     Easier to change without breaking
+
+- Alternative to build_..._relationship. Can we do it with jsonapi? Maybe mixed with build_assoc()?
 
 - consistent pluralization in serializing,
 - consistent pluralization in controllers,
