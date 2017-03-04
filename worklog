@@ -1,4 +1,6 @@
 Later:
+
+- Get user stickers from relation
 - Handle/present sent stickers for a user. Delete?
 - Name / Surname
 - Pull default author name if logged in to app
@@ -6,6 +8,7 @@ Later:
   is there a single view we could use instead of our own defs?
 
 - Figure out indexes, especially for stickers (sender, receiver, category)
+- Add reciprocal relationship of has_many in User for Sticker
 
 - decide where to put default includes (DSL vs controller)
 - decide whether those includes should be default
@@ -27,4 +30,5 @@ Later:
 - [Feature] Add "hidden" sticker categories, that are awarded by admins
 - build_receiver_relationship handle function not found
   (we don't need to, I suppose, but rendering errors is nice)
+  - Alternatively, pass on an invalid id if not found, and let the changeset assoc_constraint deal with the error?
 - Sticker message consider, max 150 chars
