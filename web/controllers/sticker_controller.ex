@@ -1,8 +1,8 @@
 defmodule Reverie.StickerController do
   use Reverie.Web, :controller
-  import Ecto.Query
 
   alias Reverie.Sticker
+  alias Reverie.User
 
   # List of Stickers by owner (receiver), based on token
   # NOTE: Preloads :sender by default, since we typically want
@@ -13,11 +13,12 @@ defmodule Reverie.StickerController do
 
     case to_string(user_id) == to_string(current_user.id) do
       true ->
-        stickers = Sticker
-        |> where(receiver_id: ^current_user.id)
-        |> preload(:sender)
+        stickers = User
+        |> Repo.get(user_id)
+        |> assoc(:stickers_received)
+        |> preload([:sender, :category])
         |> Repo.all()
-        render(conn, "index.json", data: stickers, opts: [include: "sender"])
+        render(conn, "index.json", data: stickers, opts: [include: "category,sender"])
 
       false ->
         conn
@@ -40,8 +41,11 @@ defmodule Reverie.StickerController do
     receiver = relationships
     |> build_receiver_relationship
 
+    category = relationships
+    |> build_category_relationship
+
     # Pass both sender and receiver IDs, use changeset for validation
-    changeset = Sticker.changeset(%Sticker{sender_id: current_user.id, receiver_id: receiver.id}, sticker_params)
+    changeset = Sticker.changeset(%Sticker{sender_id: current_user.id, receiver_id: receiver.id, category_id: category.id}, sticker_params)
 
     case Repo.insert(changeset) do
       {:ok, sticker} ->
@@ -65,15 +69,22 @@ defmodule Reverie.StickerController do
     receiving_user
   end
 
+  defp build_category_relationship(%{"category" => %{"data" => %{"type" => "categories", "id" => id}}}) do
+    Reverie.Category
+    |> where(id: ^id)
+    |> Repo.one!
+  end
+
   # Show a certain sticker if it belongs to the user
   def show(conn, %{"id" => id}) do
     current_user = Guardian.Plug.current_resource(conn)
 
     sticker = Sticker
     |> where(receiver_id: ^current_user.id, id: ^id)
-    |> Repo.one!
+    |> preload([:sender, :category])
+    |> Repo.one!()
 
-    render(conn, "show.json", data: sticker)
+    render(conn, "show.json", data: sticker, opts: [include: "category,sender"])
   end
 
   def update(conn, %{"id" => id, "data" => %{"id" => _, "type" => "sticker", "attributes" => sticker_params}}) do
