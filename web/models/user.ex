@@ -9,6 +9,10 @@ defmodule Reverie.User do
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
 
+    # One side of the relationship
+    has_many :stickers_sent, Reverie.Sticker, foreign_key: :sender_id
+    has_many :stickers_received, Reverie.Sticker, foreign_key: :receiver_id
+
     timestamps()
   end
 

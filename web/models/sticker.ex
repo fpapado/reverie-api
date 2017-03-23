@@ -5,6 +5,7 @@ defmodule Reverie.Sticker do
     field :title, :string
     belongs_to :sender, Reverie.User
     belongs_to :receiver, Reverie.User
+    belongs_to :category, Reverie.Category
 
     timestamps()
   end
@@ -15,8 +16,9 @@ defmodule Reverie.Sticker do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:title, :receiver_id, :sender_id])
-    |> validate_required([:title, :receiver_id, :sender_id])
+    |> validate_required([:receiver_id, :sender_id, :category_id])
     |> validate_length(:title, min: 4)
+    |> assoc_constraint(:category)
     |> validate_different_user
   end
 

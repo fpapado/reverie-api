@@ -3,6 +3,7 @@ defmodule Reverie.StickerView do
   use JaSerializer.PhoenixView
 
   attributes [:title]
+  # Included by default in :index Controller
   has_one :sender,
     serializer: Reverie.UserView,
     link: :sender_link,
@@ -15,12 +16,23 @@ defmodule Reverie.StickerView do
     include: false,
     identifiers: :when_included
 
+  # Included by default in :index Controller
+  has_one :category,
+    serializer: Reverie.CategoryView,
+    link: :category_link,
+    include: false,
+    identifiers: :when_included
+
   def sender_link(sticker, conn) do
     user_url(conn, :show, sticker.sender_id)
   end
 
   def receiver_link(sticker, conn) do
     user_url(conn, :show, sticker.receiver_id)
+  end
+
+  def category_link(sticker, conn) do
+    category_url(conn, :show, sticker.category_id)
   end
 
   def render("index.json", %{data: stickers}) do
