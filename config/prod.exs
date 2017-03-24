@@ -14,7 +14,7 @@ use Mix.Config
 config :reverie, Reverie.Endpoint,
   http: [port: {:system, "PORT"}],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
-  url: [host: "fierce-woodland-48343.herokuapp.com", port: 443],
+  url: [host: "safe-brushlands-58823.herokuapp.com", port: 443],
   secret_key_base: System.get_env("SECRET_KEY_BASE")
 
 # Configure Ecto Repository for Production
