@@ -1,3 +1,26 @@
+Next:
+- EnsureAuthenticated
+- Authorisation
+  - Admin, roles, authorisation
+  - Admin stickers ("permission")
+
+- Editing / deleting
+  - Add actions for stickers
+  - Add actions for profile
+
+- User schema update
+  - username (filter on signup changeset?)
+  - has_confirmed?
+
+- Signup flow
+  - Permitted domains / emails
+  - Confirmation email ("has_confirmed")
+
+- "Message of the day"
+  - GET /motd
+  - Calculate motd for the date, return it
+  - date: Date, message: String
+
 Later:
 
 - Handle/present sent stickers for a user. Delete?
@@ -14,6 +37,9 @@ Later:
     Easier to change without breaking
 
 - Alternative to build_..._relationship. Can we do it with jsonapi? Maybe mixed with build_assoc()?
+
+- Code for events, limit user stickers to them
+  - "Realms" / "Domains"
 
 - consistent pluralization in serializing,
 - consistent pluralization in controllers,
