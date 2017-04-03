@@ -4,6 +4,7 @@ defmodule Reverie.User do
   schema "users" do
     field :email, :string
     field :password_hash, :string
+    field :is_admin, :boolean
 
     # Virtual fields for password confirmation
     field :password, :string, virtual: true
