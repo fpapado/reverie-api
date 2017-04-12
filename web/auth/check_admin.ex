@@ -7,7 +7,7 @@ defmodule Reverie.CheckAdmin do
       conn
     else
       conn
-      |> Reverie.AuthErrorHandler.unauthorised()
+      |> Reverie.AuthErrorHandler.unauthorized([])
     end
   end
 end

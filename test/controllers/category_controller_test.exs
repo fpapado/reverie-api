@@ -6,7 +6,7 @@ defmodule Reverie.CategoryControllerTest do
   @invalid_attrs %{}
 
   setup %{conn: conn} do
-    user = Repo.insert! %Reverie.User{}
+    user = Repo.insert! %Reverie.User{username: "user"}
 
     # Encode JWT for the user
     {:ok, jwt, _} = Guardian.encode_and_sign(user, :token)

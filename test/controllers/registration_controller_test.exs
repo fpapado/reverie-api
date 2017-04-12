@@ -5,6 +5,7 @@ defmodule Reverie.RegistrationControllerTest do
 
   @valid_attrs %{
     email: "fp@example.com",
+    username: "user",
     password: "abcde12345",
     "password-confirmation": "abcde12345"
   }
