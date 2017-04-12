@@ -1,5 +1,26 @@
+TODO:
+Category > admin_only
+Category :index > load all (if current_user.is_admin) or user only
+Sticker :create > if category.admin_only then must sender.is_admin. Halt in changeset or interface? Probably interface, right?
+
+Edit user if the same
+
+Encode (permission?) in Guardian
+Do not show is_admin on index
+
+Try out ex_admin
+
+Try out coherence:
+  Confirmation
+  field has_confirmed, :boolean default: false
+
+Have a list of authorised emails; check in changeset
+
+Add tests to:
+Check is_admin cannot be set
+Check username is unique
+
 Next:
-- EnsureAuthenticated
 - Authorisation
   - Admin, roles, authorisation
   - Admin stickers ("permission")
@@ -11,6 +32,8 @@ Next:
 - User schema update
   - username (filter on signup changeset?)
   - has_confirmed?
+
+:admin can edit users (later)
 
 - Signup flow
   - Permitted domains / emails
@@ -37,10 +60,12 @@ Later:
     Easier to change without breaking
 
 - Alternative to build_..._relationship. Can we do it with jsonapi? Maybe mixed with build_assoc()?
+  - Or cast_assoc...
 
 - Code for events, limit user stickers to them
   - "Realms" / "Domains"
 
+- use json-api serialization
 - consistent pluralization in serializing,
 - consistent pluralization in controllers,
 - consistent pluralization in Ember,

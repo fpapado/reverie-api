@@ -109,7 +109,8 @@ defmodule Reverie.StickerControllerTest do
         "type" => "user",
         "id" => to_string(other_user.id),
         "attributes" => %{
-          "email" => other_user.email
+          "email" => other_user.email,
+          "username" => "other"
         },
         "relationships" => %{
           "stickers" => %{
@@ -151,7 +152,8 @@ defmodule Reverie.StickerControllerTest do
         "type" => "user",
         "id" => to_string(other_user.id),
         "attributes" => %{
-          "email" => other_user.email
+          "email" => other_user.email,
+          "username" => "other"
         },
         "relationships" => %{
           "stickers" => %{
