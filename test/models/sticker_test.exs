@@ -8,8 +8,8 @@ defmodule Reverie.StickerTest do
 
   setup do
     # Crerate users (bypassing validation)
-    user = Repo.insert! %Reverie.User{}
-    other_user = Repo.insert! %Reverie.User{}
+    user = Repo.insert! %Reverie.User{username: "user"}
+    other_user = Repo.insert! %Reverie.User{username: "other"}
 
     # Create test category
     test_category = Repo.insert!(%Reverie.Category{title: "You're cool", imgurl: "https://s3.eu-central-1.amazonaws.com/reveriestatic/cool.png"})

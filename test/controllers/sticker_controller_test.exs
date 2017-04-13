@@ -21,8 +21,8 @@ defmodule Reverie.StickerControllerTest do
 
   setup %{conn: conn} do
     # Crerate users (bypassing validation)
-    user = Repo.insert! %Reverie.User{}
-    other_user = Repo.insert! %Reverie.User{}
+    user = Repo.insert! %Reverie.User{username: "user"}
+    other_user = Repo.insert! %Reverie.User{username: "other"}
 
     # Create test category
     test_category = Repo.insert!(%Reverie.Category{title: "You're cool", imgurl: "https://s3.eu-central-1.amazonaws.com/reveriestatic/cool.png"})
@@ -109,7 +109,8 @@ defmodule Reverie.StickerControllerTest do
         "type" => "user",
         "id" => to_string(other_user.id),
         "attributes" => %{
-          "email" => other_user.email
+          "email" => other_user.email,
+          "username" => "other"
         },
         "relationships" => %{
           "stickers" => %{
@@ -151,7 +152,8 @@ defmodule Reverie.StickerControllerTest do
         "type" => "user",
         "id" => to_string(other_user.id),
         "attributes" => %{
-          "email" => other_user.email
+          "email" => other_user.email,
+          "username" => "other"
         },
         "relationships" => %{
           "stickers" => %{
@@ -181,7 +183,7 @@ defmodule Reverie.StickerControllerTest do
   end
 
   test "deletes chosen resource", %{conn: conn, user: user} do
-    other_user = Repo.insert! %Reverie.User{}
+    other_user = Repo.insert! %Reverie.User{username: "someother"}
     sticker = Repo.insert! %Sticker{receiver_id: user.id, sender_id: other_user.id}
     conn = delete conn, sticker_path(conn, :delete, sticker)
     assert response(conn, 204)

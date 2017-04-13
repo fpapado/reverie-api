@@ -3,9 +3,12 @@ defmodule Reverie.UserTest do
 
   alias Reverie.User
 
-  @valid_attrs %{email: "fp@example.com",
+  @valid_attrs %{
+    email: "fp@example.com",
+    username: "user",
     password: "abcd1234",
-    password_confirmation: "abcd1234"}
+    password_confirmation: "abcd1234"
+  }
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
