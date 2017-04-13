@@ -31,6 +31,7 @@ defmodule Reverie.User do
     |> validate_confirmation(:password)
     |> hash_password
     |> update_change(:email, &String.downcase/1)
+    |> update_change(:username, &String.downcase/1)
     |> unique_constraint(:email)
     |> unique_constraint(:username, name: :users_username_index)
   end
