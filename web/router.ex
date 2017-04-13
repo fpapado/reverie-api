@@ -15,6 +15,14 @@ defmodule Reverie.Router do
     plug Guardian.Plug.LoadResource
   end
 
+  # Admin-only plug
+  pipeline :admin_required do
+    plug :accepts, ["json", "json-api"]
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource
+    plug Reverie.CheckAdmin
+  end
+
   # Unauthenticated scope
   scope "/api", Reverie do
     pipe_through :api

@@ -3,7 +3,9 @@ defmodule Reverie.User do
 
   schema "users" do
     field :email, :string
+    field :username, :string
     field :password_hash, :string
+    field :is_admin, :boolean
 
     # Virtual fields for password confirmation
     field :password, :string, virtual: true
@@ -22,13 +24,15 @@ defmodule Reverie.User do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:email, :password, :password_confirmation])
-    |> validate_required([:email, :password, :password_confirmation])
+    |> cast(params, [:email, :username, :password, :password_confirmation])
+    |> validate_required([:email, :username, :password, :password_confirmation])
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 8)
     |> validate_confirmation(:password)
     |> hash_password
+    |> update_change(:email, &String.downcase/1)
     |> unique_constraint(:email)
+    |> unique_constraint(:username, name: :users_username_index)
   end
 
   defp hash_password(%{valid?: false} = changeset) do

@@ -4,6 +4,9 @@ defmodule Reverie.StickerController do
   alias Reverie.Sticker
   alias Reverie.User
 
+  # Enforce user authentication
+  plug Guardian.Plug.EnsureAuthenticated, handler: Reverie.AuthErrorHandler
+
   # List of Stickers by owner (receiver), based on token
   # NOTE: Preloads :sender by default, since we typically want
   # the sender's username alongside the sticker / message.

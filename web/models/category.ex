@@ -4,6 +4,7 @@ defmodule Reverie.Category do
   schema "categories" do
     field :title, :string
     field :imgurl, :string
+    field :admin_only, :boolean
 
     timestamps()
   end
