@@ -1,6 +1,6 @@
 defmodule Reverie.UserController do
     use Reverie.Web, :controller
-    use Inquisitor, with: Reverie.User, whitelist: ["email"]
+    use Inquisitor, with: Reverie.User, whitelist: ["username"]
 
     alias Reverie.User
 
